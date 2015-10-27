@@ -9,8 +9,8 @@ class meterToYardConverter : public lengthConverter
 {
   public:
     meterToYardConverter();
-    virtual double convert(double inValue);
-    virtual std::string toString() const;
+    double convert(double inValue);
+    std::string toString() const;
 };
 
 #endif // METER_TO_YARD_CONVERTER_H
