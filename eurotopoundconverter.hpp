@@ -1,7 +1,7 @@
 #ifndef EUROTOPOUNDCONVERTER_H
 #define EUROTOPOUNDCONVERTER_H
 
-#include "currencyConverter.hpp"
+#include "currencyconverter.hpp"
 
 class euroToPoundConverter : public currencyConverter
 {

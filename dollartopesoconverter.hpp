@@ -1,7 +1,7 @@
 #ifndef DOLLARTOPESOCONVERTER_H
 #define DOLLARTOPESOCONVERTER_H
 
-#include "currencyConverter.hpp"
+#include "currencyconverter.hpp"
 
 class dollarToPesoConverter : public currencyConverter
 {
