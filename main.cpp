@@ -1,6 +1,10 @@
 #include <memory>
 #include "tinytest.h"
 #include "dollartoeuroconverter.hpp"
+#include "eurotopoundconverter.hpp"
+#include "dollartopesoconverter.hpp"
+#include "mileToKilometerConverter.hpp"
+#include "meterToYardConverter.hpp"
 #include "celsiustofahrenheitconverter.hpp"
 #include "celsiustokelvinconverter.hpp"
 
