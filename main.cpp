@@ -91,20 +91,61 @@ TINYTEST_START_SUITE(Convert);
         TINYTEST_ADD_TEST(celsiusToKelvin);
 TINYTEST_END_SUITE();
 
-TINYTEST_MAIN_SINGLE_SUITE(Convert);
+// TINYTEST_MAIN_SINGLE_SUITE(Convert);
 
-/*
+
 int main(int argc, char* argv[])
 {
-  std::string conversion = argv[0];
-  std::string value = argv[1];
+  std::string conversion = argv[1];
+  std::string value = argv[2];
 
-  //TODO
+  if(conversion == "dollarToEuro")
+  {
+    auto converter = std::make_shared<dollarToEuroConverter>();
+    std::cout<<converter->toString()<<" has converted "<<value<<" Dollar to "<<converter->convert(std::stod(value))<<" Euro!"<<std::endl;
+  }
 
+  if(conversion == "euroToPound")
+  {
+    auto converter = std::make_shared<euroToPoundConverter>();
+    std::cout<<converter->toString()<<" has converted "<<value<<" Euro to "<<converter->convert(std::stod(value))<<" Pound(s)!"<<std::endl;
+  }
+
+  if(conversion == "dollarToPeso")
+  {
+    auto converter = std::make_shared<dollarToPesoConverter>();
+    std::cout<<converter->toString()<<" has converted "<<value<<" Dollar to "<<converter->convert(std::stod(value))<<" Peso(s)!"<<std::endl;
+  }
+
+  if(conversion == "mileToKilometer")
+  {
+    auto converter = std::make_shared<mileToKilometerConverter>();
+    std::cout<<converter->toString()<<" has converted "<<value<<" Mile(s) to "<<converter->convert(std::stod(value))<<" Kilometer(s)!"<<std::endl;
+  }
+
+  if(conversion == "meterToYard")
+  {
+    auto converter = std::make_shared<meterToYardConverter>();
+    std::cout<<converter->toString()<<" has converted "<<value<<" Meter(s) to "<<converter->convert(std::stod(value))<<" Yard(s)!"<<std::endl;
+  }
+
+  if(conversion == "celsiusToFahrenheit")
+  {
+    auto converter = std::make_shared<celsiusToFahrenheitConverter>();
+    std::cout<<converter->toString()<<" has converted "<<value<<" Celsius to "<<converter->convert(std::stod(value))<<" Fahrenheit!"<<std::endl;
+  }
+
+  if(conversion == "celsiusToKelvin")
+  {
+    auto converter = std::make_shared<celsiusToKelvinConverter>();
+    std::cout<<converter->toString()<<" has converted "<<value<<" Celsius to "<<converter->convert(std::stod(value))<<" Kelvin!"<<std::endl;
+  }
+
+  /*
   auto myConverter = std::make_shared<dollarToEuroConverter>();
   double aLotOfDollars = 10000;
   double aLotOfEuros = myConverter->convert(aLotOfDollars);
   std::cout << myConverter->toString() << " has converted "<< aLotOfDollars << " Dollar to " << aLotOfEuros <<" Euros!"<<std::endl;
+  */
   return 0;
 }
-*/
