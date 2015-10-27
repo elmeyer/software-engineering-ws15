@@ -6,7 +6,7 @@
 
 // TESTS
 // -----
-/*
+
 // Currency converter
 
 int dollarToEuro()
@@ -15,7 +15,7 @@ int dollarToEuro()
         TINYTEST_EQUAL_EPSILON(0, dollarToEuro->convert(0));
         TINYTEST_EQUAL_EPSILON(-0, dollarToEuro->convert(-0));
         TINYTEST_EQUAL_EPSILON(0.88, dollarToEuro->convert(1));
-        TINYTEST_EQUAL_EPSILON(8799999999999999.12, dollarToEuro->convert(9999999999999999));
+        TINYTEST_EQUAL_EPSILON(879999.12, dollarToEuro->convert(999999));
         TINYTEST_EQUAL_EPSILON(-64.24, dollarToEuro->convert(-73)); // debt
 }
 
@@ -25,7 +25,7 @@ int euroToPound()
         TINYTEST_EQUAL_EPSILON(0, euroToPound->convert(0));
         TINYTEST_EQUAL_EPSILON(-0, euroToPound->convert(-0));
         TINYTEST_EQUAL_EPSILON(0.7211, euroToPound->convert(1));
-        TINYTEST_EQUAL_EPSILON(7210999999999999.2789, euroToPound->convert(9999999999999999));
+        TINYTEST_EQUAL_EPSILON(721099.2789, euroToPound->convert(999999));
         TINYTEST_EQUAL_EPSILON(-52.6403, euroToPound->convert(-73)); // debt
 }
 
@@ -35,7 +35,7 @@ int dollarToPeso()
         TINYTEST_EQUAL_EPSILON(0, dollarToPeso->convert(0));
         TINYTEST_EQUAL_EPSILON(-0, dollarToPeso->convert(-0));
         TINYTEST_EQUAL_EPSILON(16.5678121, dollarToPeso->convert(1));
-        TINYTEST_EQUAL_EPSILON(165678120999999983.4321879, dollarToPeso->convert(9999999999999999));
+        TINYTEST_EQUAL_EPSILON(16567795.5321879, dollarToPeso->convert(999999));
         TINYTEST_EQUAL_EPSILON(-1209.4502833, dollarToPeso->convert(-73)); // debt
 }
 
@@ -45,8 +45,8 @@ int mileToKilometer()
 {
         auto mileToKilometer = std::make_shared<mileToKilometerConverter>();
         TINYTEST_EQUAL_EPSILON(0, mileToKilometer->convert(0));
-        TINYTEST_EQUAL_EPSILON(1.60934, mileToKilometer->convert(1));
-        TINYTEST_EQUAL_EPSILON(16093399999999998.39066, mileToKilometer->convert(9999999999999999));
+        TINYTEST_EQUAL_EPSILON(1.609347219, mileToKilometer->convert(1));
+        TINYTEST_EQUAL_EPSILON(1609345.609652781, mileToKilometer->convert(999999));
 }
 
 int meterToYard()
@@ -54,9 +54,9 @@ int meterToYard()
         auto meterToYard = std::make_shared<meterToYardConverter>();
         TINYTEST_EQUAL_EPSILON(0, meterToYard->convert(0));
         TINYTEST_EQUAL_EPSILON(1.09361, meterToYard->convert(1));
-        TINYTEST_EQUAL_EPSILON(10936099999999998.90639, meterToYard->convert(9999999999999999));
+        TINYTEST_EQUAL_EPSILON(1093608.90639, meterToYard->convert(999999));
 }
-*/
+
 // Temperature converter
 
 int celsiusToFahrenheit()
@@ -71,20 +71,18 @@ int celsiusToFahrenheit()
 int celsiusToKelvin()
 {
         auto celsiusToKelvin = std::make_shared<celsiusToKelvinConverter>();
-        TINYTEST_ASSERT(0 == celsiusToKelvin->convert(-273.15));
-        TINYTEST_ASSERT(2185.15 == celsiusToKelvin->convert(1912.0));
-        TINYTEST_ASSERT(2183.15 == celsiusToKelvin->convert(1910.0));
-        TINYTEST_ASSERT(3184.15 == celsiusToKelvin->convert(2911.0));
+        TINYTEST_ASSERT(celsiusToKelvin->convert(-273.15) == 0);
+        TINYTEST_ASSERT(celsiusToKelvin->convert(1912.0) == 2185.15);
+        TINYTEST_ASSERT(celsiusToKelvin->convert(1910.0) == 2183.15);
+        TINYTEST_ASSERT(celsiusToKelvin->convert(2911.0) == 3184.15);
 }
 
 TINYTEST_START_SUITE(Convert);
-        /*
         TINYTEST_ADD_TEST(dollarToEuro);
         TINYTEST_ADD_TEST(euroToPound);
         TINYTEST_ADD_TEST(dollarToPeso);
         TINYTEST_ADD_TEST(mileToKilometer);
         TINYTEST_ADD_TEST(meterToYard);
-        */
         TINYTEST_ADD_TEST(celsiusToFahrenheit);
         TINYTEST_ADD_TEST(celsiusToKelvin);
 TINYTEST_END_SUITE();
