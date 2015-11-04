@@ -1,5 +1,5 @@
 #include <memory>
-#include "tinytest.h"
+#include <iostream>
 #include "dollartoeuroconverter.hpp"
 #include "eurotopoundconverter.hpp"
 #include "dollartopesoconverter.hpp"
@@ -8,158 +8,134 @@
 #include "celsiustofahrenheitconverter.hpp"
 #include "celsiustokelvinconverter.hpp"
 
-// TESTS
-// -----
-
-// Currency converter
-
-int dollarToEuro()
+void help()
 {
-        auto dollarToEuro = std::make_shared<dollarToEuroConverter>();
-        TINYTEST_EQUAL_EPSILON(0.0, dollarToEuro->convert(0.0));
-        TINYTEST_EQUAL_EPSILON(-0.0, dollarToEuro->convert(-0.0));
-        TINYTEST_EQUAL_EPSILON(0.88, dollarToEuro->convert(1));
-        TINYTEST_EQUAL_EPSILON(879999.12, dollarToEuro->convert(999999));
-        TINYTEST_EQUAL_EPSILON(-64.24, dollarToEuro->convert(-73)); // debt
+  std::cout << std::endl;
+  std::cout << "Software Engineering Exercise Class WS15/16" << std::endl;
+  std::cout << "===========================================" << std::endl;
+  std::cout << "Exercise 2: Unit Converters (topic: Best Practices)" 
+  << std::endl; 
+  std::cout << "by theelstner, AIpeter and elmeyer" << std::endl << std::endl;
 
-        return 1;
+
+  std::cout << "Usage: ./main [converter] [number]" << std::endl;
+  std::cout << "where [converter] is one of the following:" << std::endl;
+  std::cout << "        dollarToEuro\n        dollarToPeso\n";
+  std::cout << "        euroToPound\n        mileToKilometer\n";
+  std::cout << "        meterToYard\n        celsiusToFahrenheit\n";
+  std::cout << "        celsiusToKelvin" << std::endl;
+  std::cout << std::endl;
 }
-
-int euroToPound()
-{
-        auto euroToPound = std::make_shared<euroToPoundConverter>();
-        TINYTEST_EQUAL_EPSILON(0.0, euroToPound->convert(0.0));
-        TINYTEST_EQUAL_EPSILON(-0.0, euroToPound->convert(-0.0));
-        TINYTEST_EQUAL_EPSILON(0.7211, euroToPound->convert(1));
-        TINYTEST_EQUAL_EPSILON(721099.2789, euroToPound->convert(999999));
-        TINYTEST_EQUAL_EPSILON(-52.6403, euroToPound->convert(-73)); // debt
-
-        return 1;
-}
-
-int dollarToPeso()
-{
-        auto dollarToPeso = std::make_shared<dollarToPesoConverter>();
-        TINYTEST_EQUAL_EPSILON(0.0, dollarToPeso->convert(0.0));
-        TINYTEST_EQUAL_EPSILON(-0.0, dollarToPeso->convert(-0.0));
-        TINYTEST_EQUAL_EPSILON(16.5678121, dollarToPeso->convert(1));
-        TINYTEST_EQUAL_EPSILON(16567795.5321879, dollarToPeso->convert(999999));
-        TINYTEST_EQUAL_EPSILON(-1209.4502833, dollarToPeso->convert(-73)); // debt
-
-        return 1;
-}
-
-// Length converter
-
-int mileToKilometer()
-{
-        auto mileToKilometer = std::make_shared<mileToKilometerConverter>();
-        TINYTEST_EQUAL_EPSILON(0.0, mileToKilometer->convert(0.0));
-        TINYTEST_EQUAL_EPSILON(1.609347219, mileToKilometer->convert(1));
-        TINYTEST_EQUAL_EPSILON(1609345.609652781, mileToKilometer->convert(999999));
-
-        return 1;
-}
-
-int meterToYard()
-{
-        auto meterToYard = std::make_shared<meterToYardConverter>();
-        TINYTEST_EQUAL_EPSILON(0.0, meterToYard->convert(0.0));
-        TINYTEST_EQUAL_EPSILON(1.09361, meterToYard->convert(1));
-        TINYTEST_EQUAL_EPSILON(1093608.90639, meterToYard->convert(999999));
-
-        return 1;
-}
-
-// Temperature converter
-
-int celsiusToFahrenheit()
-{
-        auto celsiusToFahrenheit = std::make_shared<celsiusToFahrenheitConverter>();
-        TINYTEST_EQUAL_EPSILON(32.0, celsiusToFahrenheit->convert(0));
-        TINYTEST_EQUAL_EPSILON(0.0, celsiusToFahrenheit->convert(-17.7777778));
-        TINYTEST_EQUAL_EPSILON(451.0, celsiusToFahrenheit->convert(232.7777778));
-        TINYTEST_EQUAL_EPSILON(-10.0, celsiusToFahrenheit->convert(-23.3333333));
-
-        return 1;
-}
-
-int celsiusToKelvin()
-{
-        auto celsiusToKelvin = std::make_shared<celsiusToKelvinConverter>();
-        TINYTEST_ASSERT(celsiusToKelvin->convert(-273.15) == 0);
-        TINYTEST_ASSERT(celsiusToKelvin->convert(1912.0) == 2185.15);
-        TINYTEST_ASSERT(celsiusToKelvin->convert(1910.0) == 2183.15);
-        TINYTEST_ASSERT(celsiusToKelvin->convert(2911.0) == 3184.15);
-
-        return 1;
-}
-
-TINYTEST_START_SUITE(Convert);
-        TINYTEST_ADD_TEST(dollarToEuro);
-        TINYTEST_ADD_TEST(euroToPound);
-        TINYTEST_ADD_TEST(dollarToPeso);
-        TINYTEST_ADD_TEST(mileToKilometer);
-        TINYTEST_ADD_TEST(meterToYard);
-        TINYTEST_ADD_TEST(celsiusToFahrenheit);
-        TINYTEST_ADD_TEST(celsiusToKelvin);
-TINYTEST_END_SUITE();
-
-// TINYTEST_MAIN_SINGLE_SUITE(Convert);
-
 
 int main(int argc, char* argv[])
 {
+  if(argc < 2)
+  {
+    std::cout << "Invalid number of arguments!" << std::endl;
+    std::cout << "For help on how to use this program, use ./main -h." 
+    << std::endl;
+
+    return 1;
+  }
+
   std::string conversion = argv[1];
-  std::string value = argv[2];
 
-  if(conversion == "dollarToEuro")
+  if(conversion == "-h")
   {
-    auto converter = std::make_shared<dollarToEuroConverter>();
-    std::cout<<converter->toString()<<" has converted "<<value<<" Dollar to "<<converter->convert(std::stod(value))<<" Euro!"<<std::endl;
+    help();
+    return 0;
   }
 
-  if(conversion == "euroToPound")
+  if(argc == 3)
   {
-    auto converter = std::make_shared<euroToPoundConverter>();
-    std::cout<<converter->toString()<<" has converted "<<value<<" Euro to "<<converter->convert(std::stod(value))<<" Pound(s)!"<<std::endl;
-  }
+    std::string value = argv[2];
 
-  if(conversion == "dollarToPeso")
-  {
-    auto converter = std::make_shared<dollarToPesoConverter>();
-    std::cout<<converter->toString()<<" has converted "<<value<<" Dollar to "<<converter->convert(std::stod(value))<<" Peso(s)!"<<std::endl;
-  }
+    if(conversion == "dollarToEuro")
+    {
+      auto converter = std::make_shared<dollarToEuroConverter>();
 
-  if(conversion == "mileToKilometer")
-  {
-    auto converter = std::make_shared<mileToKilometerConverter>();
-    std::cout<<converter->toString()<<" has converted "<<value<<" Mile(s) to "<<converter->convert(std::stod(value))<<" Kilometer(s)!"<<std::endl;
-  }
+      std::cout<<converter->toString()<<" has converted "<<value<<" Dollar to "
+      <<converter->convert(std::stod(value))<<" Euro(s)!"<<std::endl;
+    }
 
-  if(conversion == "meterToYard")
-  {
-    auto converter = std::make_shared<meterToYardConverter>();
-    std::cout<<converter->toString()<<" has converted "<<value<<" Meter(s) to "<<converter->convert(std::stod(value))<<" Yard(s)!"<<std::endl;
-  }
+    else if(conversion == "euroToPound")
+    {
+      auto converter = std::make_shared<euroToPoundConverter>();
 
-  if(conversion == "celsiusToFahrenheit")
-  {
-    auto converter = std::make_shared<celsiusToFahrenheitConverter>();
-    std::cout<<converter->toString()<<" has converted "<<value<<" Celsius to "<<converter->convert(std::stod(value))<<" Fahrenheit!"<<std::endl;
-  }
+      std::cout<<converter->toString()<<" has converted "<<value<<" Euro to "
+      <<converter->convert(std::stod(value))<<" Pound(s)!"<<std::endl;
+    }
 
-  if(conversion == "celsiusToKelvin")
+    else if(conversion == "dollarToPeso")
+    {
+      auto converter = std::make_shared<dollarToPesoConverter>();
+
+      std::cout<<converter->toString()<<" has converted "<<value<<" Dollar to "
+      <<converter->convert(std::stod(value))<<" Peso(s)!"<<std::endl;
+    }
+
+    else if(conversion == "mileToKilometer")
+    {
+      auto converter = std::make_shared<mileToKilometerConverter>();
+
+      std::cout<<converter->toString()<<" has converted "<<value
+      <<" Mile(s) to "<<converter->convert(std::stod(value))<<" Kilometer(s)!"
+      <<std::endl;
+    }
+
+    else if(conversion == "meterToYard")
+    {
+      auto converter = std::make_shared<meterToYardConverter>();
+
+      std::cout<<converter->toString()<<" has converted "<<value
+      <<" Meter(s) to "<<converter->convert(std::stod(value))<<" Yard(s)!"
+      <<std::endl;
+    }
+
+    else if(conversion == "celsiusToFahrenheit")
+    {
+      auto converter = std::make_shared<celsiusToFahrenheitConverter>();
+
+      std::cout<<converter->toString()<<" has converted "<<value
+      <<" Celsius to "<<converter->convert(std::stod(value))<<" Fahrenheit!"
+      <<std::endl;
+    }
+
+    else if(conversion == "celsiusToKelvin")
+    {
+      auto converter = std::make_shared<celsiusToKelvinConverter>();
+
+      std::cout<<converter->toString()<<" has converted "<<value
+      <<" Celsius to "<<converter->convert(std::stod(value))<<" Kelvin!"
+      <<std::endl;
+    }
+
+    else
+    {
+      std::cout << "Invalid converter: " << argv[1] << "!" << std::endl;
+      std::cout << "For a list of valid converters, use ./main -h." 
+      << std::endl;
+
+      return 1;
+    }
+  }
+  else
   {
-    auto converter = std::make_shared<celsiusToKelvinConverter>();
-    std::cout<<converter->toString()<<" has converted "<<value<<" Celsius to "<<converter->convert(std::stod(value))<<" Kelvin!"<<std::endl;
+    std::cout << "Invalid number of arguments!" << std::endl;
+    std::cout << "For help on how to use this program, use ./main -h." 
+    << std::endl;
+
+    return 1;
   }
 
   /*
   auto myConverter = std::make_shared<dollarToEuroConverter>();
   double aLotOfDollars = 10000;
   double aLotOfEuros = myConverter->convert(aLotOfDollars);
-  std::cout << myConverter->toString() << " has converted "<< aLotOfDollars << " Dollar to " << aLotOfEuros <<" Euros!"<<std::endl;
+
+  std::cout << myConverter->toString() << " has converted "<< aLotOfDollars 
+  << " Dollar to " << aLotOfEuros <<" Euros!"<<std::endl;
+
   */
   return 0;
 }
