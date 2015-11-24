@@ -12,23 +12,21 @@
 #include "celsiustofahrenheitconverter.hpp"
 #include "celsiustokelvinconverter.hpp"
 
-using namespace std;
-
 class ConverterFactory
 {
 public:
-        shared_ptr<UnitConverter> create(string const& c);
-        static shared_ptr<ConverterFactory> instance();
+        std::shared_ptr<UnitConverter> create(std::string const& c);
+        static std::shared_ptr<ConverterFactory> instance();
 private:
-        map<string, shared_ptr<UnitConverter>> converters_ = {
-                {"dollarToEuro", make_shared<dollarToEuroConverter>()},
-                {"euroToPound", make_shared<euroToPoundConverter>()},
-                {"dollarToPeso", make_shared<dollarToPesoConverter>()},
-                {"mileToKilometer", make_shared<mileToKilometerConverter>()},
-                {"meterToYard", make_shared<meterToYardConverter>()},
-                {"celsiusToFahrenheit", make_shared<celsiusToFahrenheitConverter>()},
-                {"celsiusToKelvin", make_shared<celsiusToKelvinConverter>()}};
-        static shared_ptr<ConverterFactory> s_instance;
+        std::map<std::string, std::shared_ptr<UnitConverter>> converters_ = {
+                {"dollarToEuro", std::make_shared<dollarToEuroConverter>()},
+                {"euroToPound", std::make_shared<euroToPoundConverter>()},
+                {"dollarToPeso", std::make_shared<dollarToPesoConverter>()},
+                {"mileToKilometer", std::make_shared<mileToKilometerConverter>()},
+                {"meterToYard", std::make_shared<meterToYardConverter>()},
+                {"celsiusToFahrenheit", std::make_shared<celsiusToFahrenheitConverter>()},
+                {"celsiusToKelvin", std::make_shared<celsiusToKelvinConverter>()}};
+        static std::shared_ptr<ConverterFactory> s_instance;
 }; 
 
 #endif // CONVERTERFACTORY_H
