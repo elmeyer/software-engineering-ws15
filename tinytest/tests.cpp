@@ -1,18 +1,15 @@
 #include <memory>
+#include <vector>
 #include "tinytest.h"
-#include "../dollartoeuroconverter.hpp"
-#include "../eurotopoundconverter.hpp"
-#include "../dollartopesoconverter.hpp"
-#include "../mileToKilometerConverter.hpp"
-#include "../meterToYardConverter.hpp"
-#include "../celsiustofahrenheitconverter.hpp"
-#include "../celsiustokelvinconverter.hpp"
+#include "../converterfactory.hpp"
+
+std::shared_ptr<ConverterFactory> ConverterFactory::s_instance = 0;
 
 // TESTS
 // -----
 
 // Currency converter
-
+/*
 int dollarToEuro()
 {
         auto dollarToEuro = std::make_shared<dollarToEuroConverter>();
@@ -94,8 +91,32 @@ int celsiusToKelvin()
 
         return 1;
 }
+*/
+
+int converters()
+{
+        std::vector<std::string> v1{"dollarToEuro", "euroToPound", 
+                                "dollarToPeso", "mileToKilometer",
+                                "meterToYard", "celsiusToFahrenheit",
+                                "celsiusToKelvin"};
+        std::vector<std::string> v2{"Dollar to Euro Converter",
+                                "Euro to Pound Converter",
+                                "Dollar to Peso Converter",
+                                "Mile to Kilometer Converter",
+                                "Meter to Yard Converter",
+                                "Celsius to Fahrenheit converter",
+                                "Celsius to Kelvin converter"};
+        for(int i=0; i < v1.size(); ++i)
+        {
+                std::shared_ptr<UnitConverter> converter = ConverterFactory::instance()->create(v1[i]);
+                TINYTEST_ASSERT(converter->toString() == v2[i]);
+        }
+
+        return 1;
+}
 
 TINYTEST_START_SUITE(Convert);
+        /*
         TINYTEST_ADD_TEST(dollarToEuro);
         TINYTEST_ADD_TEST(euroToPound);
         TINYTEST_ADD_TEST(dollarToPeso);
@@ -103,6 +124,8 @@ TINYTEST_START_SUITE(Convert);
         TINYTEST_ADD_TEST(meterToYard);
         TINYTEST_ADD_TEST(celsiusToFahrenheit);
         TINYTEST_ADD_TEST(celsiusToKelvin);
+        */
+        TINYTEST_ADD_TEST(converters);
 TINYTEST_END_SUITE();
 
 TINYTEST_MAIN_SINGLE_SUITE(Convert);

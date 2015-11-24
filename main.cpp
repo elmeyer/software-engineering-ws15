@@ -1,19 +1,15 @@
 #include <memory>
 #include <iostream>
-#include "dollartoeuroconverter.hpp"
-#include "eurotopoundconverter.hpp"
-#include "dollartopesoconverter.hpp"
-#include "mileToKilometerConverter.hpp"
-#include "meterToYardConverter.hpp"
-#include "celsiustofahrenheitconverter.hpp"
-#include "celsiustokelvinconverter.hpp"
+#include "converterfactory.hpp"
+
+std::shared_ptr<ConverterFactory> ConverterFactory::s_instance = 0;
 
 void help()
 {
   std::cout << std::endl;
   std::cout << "Software Engineering Exercise Class WS15/16" << std::endl;
   std::cout << "===========================================" << std::endl;
-  std::cout << "Exercise 2: Unit Converters (topic: Best Practices)" 
+  std::cout << "Exercise 4: Unit Converters (topic: Design Patterns (Part 1))" 
   << std::endl; 
   std::cout << "by theelstner, AIpeter and elmeyer" << std::endl << std::endl;
 
@@ -49,67 +45,14 @@ int main(int argc, char* argv[])
   if(argc == 3)
   {
     std::string value = argv[2];
-
-    if(conversion == "dollarToEuro")
+    std::shared_ptr<UnitConverter> converter = ConverterFactory::instance()->create(conversion);
+    
+    if (converter != NULL)
     {
-      auto converter = std::make_shared<dollarToEuroConverter>();
-
-      std::cout<<converter->toString()<<" has converted "<<value<<" Dollar to "
-      <<converter->convert(std::stod(value))<<" Euro(s)!"<<std::endl;
-    }
-
-    else if(conversion == "euroToPound")
-    {
-      auto converter = std::make_shared<euroToPoundConverter>();
-
-      std::cout<<converter->toString()<<" has converted "<<value<<" Euro to "
-      <<converter->convert(std::stod(value))<<" Pound(s)!"<<std::endl;
-    }
-
-    else if(conversion == "dollarToPeso")
-    {
-      auto converter = std::make_shared<dollarToPesoConverter>();
-
-      std::cout<<converter->toString()<<" has converted "<<value<<" Dollar to "
-      <<converter->convert(std::stod(value))<<" Peso(s)!"<<std::endl;
-    }
-
-    else if(conversion == "mileToKilometer")
-    {
-      auto converter = std::make_shared<mileToKilometerConverter>();
-
       std::cout<<converter->toString()<<" has converted "<<value
-      <<" Mile(s) to "<<converter->convert(std::stod(value))<<" Kilometer(s)!"
+      <<" to "<<converter->convert(std::stod(value))<<"!"
       <<std::endl;
     }
-
-    else if(conversion == "meterToYard")
-    {
-      auto converter = std::make_shared<meterToYardConverter>();
-
-      std::cout<<converter->toString()<<" has converted "<<value
-      <<" Meter(s) to "<<converter->convert(std::stod(value))<<" Yard(s)!"
-      <<std::endl;
-    }
-
-    else if(conversion == "celsiusToFahrenheit")
-    {
-      auto converter = std::make_shared<celsiusToFahrenheitConverter>();
-
-      std::cout<<converter->toString()<<" has converted "<<value
-      <<" Celsius to "<<converter->convert(std::stod(value))<<" Fahrenheit!"
-      <<std::endl;
-    }
-
-    else if(conversion == "celsiusToKelvin")
-    {
-      auto converter = std::make_shared<celsiusToKelvinConverter>();
-
-      std::cout<<converter->toString()<<" has converted "<<value
-      <<" Celsius to "<<converter->convert(std::stod(value))<<" Kelvin!"
-      <<std::endl;
-    }
-
     else
     {
       std::cout << "Invalid converter: " << argv[1] << "!" << std::endl;
