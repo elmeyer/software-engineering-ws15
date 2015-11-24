@@ -9,7 +9,7 @@ class mileToKilometerConverter : public lengthConverter
 {
   public:
     mileToKilometerConverter();
-    double convert(double inValue);
+    double convert(double inValue) const;
     std::string toString() const;
 };
 

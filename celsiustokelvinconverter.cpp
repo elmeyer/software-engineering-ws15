@@ -2,7 +2,7 @@
 
 celsiusToKelvinConverter::celsiusToKelvinConverter() {}
 
-double celsiusToKelvinConverter::convert(double inValue)
+double celsiusToKelvinConverter::convert(double inValue) const
 {
         return (inValue + 273.15);
 }

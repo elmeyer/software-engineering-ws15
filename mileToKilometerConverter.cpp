@@ -8,7 +8,7 @@ mileToKilometerConverter::mileToKilometerConverter()
 /*In: double value of miles
  *Out: kilometer value of input miles
  */
-double mileToKilometerConverter::convert(double inputMiles){
+double mileToKilometerConverter::convert(double inputMiles) const{
   return inputMiles*1.609347219;
 }
 

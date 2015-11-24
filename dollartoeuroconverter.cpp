@@ -2,21 +2,21 @@
 
 #include <string>
 
-DollarToEuroConverter::DollarToEuroConverter()
+dollarToEuroConverter::dollarToEuroConverter()
 {
 }
 
 /*In: double value of dollars
  *Out: Euro value of input dollars as of 9.10.15
  */
-double DollarToEuroConverter::convert(const double inputDollars) const{
+double dollarToEuroConverter::convert(const double inputDollars) const{
   return inputDollars*0.88;
 }
 
-std::string DollarToEuroConverter::toString() const{
+std::string dollarToEuroConverter::toString() const{
   return "Dollar to Euro Converter";
 }
 
-void DollarToEuroConverter::print() const{
+void dollarToEuroConverter::print() const{
   std::cout << toString();
 }

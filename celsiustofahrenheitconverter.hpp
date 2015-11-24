@@ -7,7 +7,7 @@ class celsiusToFahrenheitConverter: public temperatureConverter
 {
 public:
         celsiusToFahrenheitConverter();
-        double convert(double inValue);
+        double convert(double inValue) const;
         std::string toString() const;
 };
 

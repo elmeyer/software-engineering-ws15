@@ -3,12 +3,12 @@
 
 #include "unitconverter.hpp"
 
-class currencyConverter : public converter
+class currencyConverter : public UnitConverter
 {
   public:
   	currencyConverter();
-  	virtual double convert(double inValue) = 0;
-    virtual std::string toString() const = 0;
+  	virtual double convert(double inValue) const = 0;
+        virtual std::string toString() const = 0;
   	void print() const;
 
 

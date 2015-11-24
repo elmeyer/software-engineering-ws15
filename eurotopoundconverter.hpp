@@ -7,7 +7,7 @@ class euroToPoundConverter : public currencyConverter
 {
   public:
     euroToPoundConverter();
-    double convert(double inEuro);
+    double convert(double inEuro) const;
     std::string toString() const;
 };
 

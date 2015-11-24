@@ -5,11 +5,11 @@
 #include <string>
 #include "unitconverter.hpp"
 
-class lengthConverter : public converter
+class lengthConverter : public UnitConverter
 {
   public:
     lengthConverter();
-    virtual double convert(double inValue) = 0;
+    virtual double convert(double inValue) const = 0;
     virtual std::string toString() const = 0;
     void print() const;
 };
