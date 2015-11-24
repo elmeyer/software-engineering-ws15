@@ -1,7 +1,7 @@
 #ifndef CURRENCYCONVERTER_H
 #define CURRENCYCONVERTER_H
 
-#include "converter.hpp"
+#include "unitconverter.hpp"
 
 class currencyConverter : public converter
 {

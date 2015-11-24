@@ -6,8 +6,8 @@
 class dollarToEuroConverter : public currencyConverter
 {
   public:
-    dollarToEuroConverter();
-    double convert(double inDollars);
+    DollarToEuroConverter();
+    double convert(const double inDollars) const;
     std::string toString() const;
 };
 
