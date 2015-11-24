@@ -1,8 +1,6 @@
 #ifndef CONVERTERFACTORY_H
 #define CONVERTERFACTORY_H
 
-using namespace std;
-
 #include <memory>
 #include <map>
 #include <string>
@@ -13,6 +11,8 @@ using namespace std;
 #include "meterToYardConverter.hpp"
 #include "celsiustofahrenheitconverter.hpp"
 #include "celsiustokelvinconverter.hpp"
+
+using namespace std;
 
 class ConverterFactory
 {
