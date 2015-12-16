@@ -2,13 +2,13 @@
 
 Decorator::Decorator(std::shared_ptr<UnitConverter> c, std::string unit1,
   std::string unit2, double factor):
-  m_wrappee(c),
-  UnitConverter(unit1, unit2, factor)
+  UnitConverter(unit1, unit2, factor),
+  m_wrappee(c)
 {}
 
 Decorator::Decorator(std::shared_ptr<UnitConverter> c):
-  m_wrappee(c),
-  UnitConverter()
+  UnitConverter(),
+  m_wrappee(c)
 {}
 
 Decorator::~Decorator() 
