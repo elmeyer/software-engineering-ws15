@@ -1,6 +1,8 @@
 #include <memory>
 #include <iostream>
+#include <stack>
 #include "converterfactory.hpp"
+#include "decorator.hpp"
 
 std::shared_ptr<ConverterFactory> ConverterFactory::s_instance = 0;
 
@@ -34,22 +36,43 @@ int main(int argc, char* argv[])
     return 1;
   }
 
-  std::string conversion = argv[1];
+  std::string input1 = argv[1];
 
-  if(conversion == "-h")
+  if(input1 == "-h")
   {
     help();
     return 0;
   }
 
-  if(argc == 3)
+  if(argc >= 3)
   {
-    std::string value = argv[2];
-    std::shared_ptr<UnitConverter> converter = ConverterFactory::instance()->create(conversion);
-    
+    std::stack<std::string> converters;
+    std::shared_ptr<ConverterFactory> factory = ConverterFactory::instance();
+    std::shared_ptr<UnitConverter> converter;
+    std::string value = argv[argc-1];
+
+    for(int i = argc-2; i > 0; --i)
+    {
+      converters.push(argv[i]);
+    }
+
+    converter = factory->create(converters.top());
+    converters.pop();
+
+    if(converters.size() > 0)
+    {
+      for(int j = 0; j < converters.size(); ++j)
+      {
+        std::shared_ptr<UnitConverter> temp = factory->create(converters.top());
+        temp->link(converter);
+        converter = temp;
+        converters.pop();
+      }
+    }
+
     if (converter != NULL)
     {
-      std::cout<<converter->toString()<<" has converted "<<value
+      std::cout<<converter->toString()<<" converted "<<value
       <<" to "<<converter->convert(std::stod(value))<<"!"
       <<std::endl;
     }

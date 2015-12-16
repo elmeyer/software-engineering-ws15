@@ -7,8 +7,9 @@ class dollarToPesoConverter : public currencyConverter
 {
   public:
     dollarToPesoConverter();
-    double convert(double inDollars) const;
-    std::string toString() const;
+    dollarToPesoConverter(std::shared_ptr<UnitConverter> c);
+    // double convert(double inDollars) const;
+    // std::string toString() const;
 };
 
 #endif // DOLLARTOPESOCONVERTER_H

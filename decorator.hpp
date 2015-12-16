@@ -6,7 +6,9 @@
 class Decorator: public UnitConverter
 {
 public:
-  Decorator();
+  Decorator(std::shared_ptr<UnitConverter> c, std::string unit1,
+    std::string unit2, double factor);
+  Decorator(std::shared_ptr<UnitConverter> c);
   ~Decorator();
   double convert(double inValue) const;
   std::string toString() const;

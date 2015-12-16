@@ -1,16 +1,15 @@
 #ifndef LENGTH_CONVERTER_H
 #define LENGTH_CONVERTER_H
 
-#include <iostream>
-#include <string>
-#include "unitconverter.hpp"
+#include "decorator.hpp"
 
-class lengthConverter : public UnitConverter
+class lengthConverter : public Decorator
 {
   public:
-    lengthConverter();
-    virtual double convert(double inValue) const = 0;
-    virtual std::string toString() const = 0;
+    lengthConverter(std::shared_ptr<UnitConverter> c, std::string unit1,
+      std::string unit2, double factor);
+    double convert(double inValue) const;
+    std::string toString() const;
 };
 
 #endif // LENGTH_CONVERTER_H

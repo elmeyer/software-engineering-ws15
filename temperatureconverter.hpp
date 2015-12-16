@@ -1,14 +1,15 @@
 #ifndef TEMPERATURECONVERTER_H
 #define TEMPERATURECONVERTER_H
 
-#include "unitconverter.hpp"
+#include "decorator.hpp"
 
-class temperatureConverter: public UnitConverter
+class temperatureConverter: public Decorator
 {
-public:
-        temperatureConverter();
-        virtual double convert(double inValue) const = 0;
-        virtual std::string toString() const = 0;
+  public:
+    temperatureConverter(std::shared_ptr<UnitConverter> c, std::string unit1,
+      std::string unit2);
+    virtual double convert(double inValue) const = 0;
+    std::string toString() const;
 };
 
 #endif // TEMPERATURECONVERTER_H

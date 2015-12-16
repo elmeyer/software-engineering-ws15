@@ -7,8 +7,9 @@ class euroToPoundConverter : public currencyConverter
 {
   public:
     euroToPoundConverter();
-    double convert(double inEuro) const;
-    std::string toString() const;
+    euroToPoundConverter(std::shared_ptr<UnitConverter> c);
+    // double convert(double inEuro) const;
+    // std::string toString() const;
 };
 
 #endif // EUROTOPOUNDCONVERTER_H
