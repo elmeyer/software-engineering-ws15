@@ -1,8 +1,12 @@
 #include <memory>
 #include <iostream>
 #include <stack>
+#include <sstream>
+#include <deque>
+#include <vector>
 #include "converterfactory.hpp"
 #include "inversion.hpp"
+#include "command.hpp"
 
 std::shared_ptr<ConverterFactory> ConverterFactory::s_instance = 0;
 
@@ -11,39 +15,113 @@ void help()
   std::cout << std::endl;
   std::cout << "Software Engineering Exercise Class WS15/16" << std::endl;
   std::cout << "===========================================" << std::endl;
-  std::cout << "Exercise 4: Unit Converters (topic: Design Patterns (Part 1))" 
+  std::cout << "Exercise 5: Unit Converters (topic: Design Patterns (Part 2))" 
   << std::endl; 
   std::cout << "by theelstner, AIpeter and elmeyer" << std::endl << std::endl;
 
 
-  std::cout << "Usage: ./main [converter] [number]" << std::endl;
-  std::cout << "where [converter] is one of the following:" << std::endl;
+  std::cout << "Usage: ./main" << std::endl;
+  std::cout << "Possible conversions are the following:" << std::endl;
   std::cout << "        dollarToEuro\n        dollarToPeso\n";
   std::cout << "        euroToPound\n        mileToKilometer\n";
   std::cout << "        meterToYard\n        celsiusToFahrenheit\n";
-  std::cout << "        celsiusToKelvin" << std::endl;
+  std::cout << "        celsiusToKelvin\n";
+  std::cout << "Conversions can be capsuled and inverted (by prefixing the ";
+  std::cout << "desired converter with invert)." << std::endl;
   std::cout << std::endl;
 }
 
 int main(int argc, char* argv[])
 {
-  if(argc < 2)
+  if(argc >= 2)
   {
-    std::cout << "Invalid number of arguments!" << std::endl;
-    std::cout << "For help on how to use this program, use ./main -h." 
-    << std::endl;
+    std::string input1 = argv[1];
 
-    return 1;
+    if(input1 == "-h")
+    {
+      help();
+      return 0;
+    }
+    else
+    {
+      std::cout << "Invalid argument(s)!" << std::endl;
+      std::cout << "For help on how to use this program, use ./main -h." 
+      << std::endl;
+
+      return 1;
+    }
   }
 
-  std::string input1 = argv[1];
+  std::deque<std::shared_ptr<Command>> commands;
 
-  if(input1 == "-h")
+  std::cout << "Please enter the desired conversions line by line, separated ";
+  std::cout << "by pressing Enter.\n";
+
+  for (std::string line; std::getline(std::cin, line);)
   {
-    help();
-    return 0;
+    std::deque<std::string> converters;
+    std::shared_ptr<ConverterFactory> factory = ConverterFactory::instance();
+    std::shared_ptr<UnitConverter> converter;
+
+    std::istringstream stream{line};
+    std::string word;
+    while(stream.good())
+    {
+      stream >> word;
+      converters.push_back(word);
+    }
+
+    std::string value = converters.back();
+    converters.pop_back();
+
+    if(converters.front() == "invert")
+    {
+      converters.pop_front();
+      converter = std::make_shared<Inversion>(factory->create(converters.front()));
+    }
+    else
+    {
+      converter = factory->create(converters.front());
+    }
+
+    converters.pop_front();
+
+    if(converters.size() > 0)
+    {
+      for(int j = 0; j < converters.size(); ++j)
+      {
+        std::shared_ptr<UnitConverter> temp;
+        if(converters.front() == "invert")
+        {
+          converters.pop_front();
+          temp = std::make_shared<Inversion>(factory->create(converters.front()));
+        }
+        else
+        {
+          temp = factory->create(converters.front());
+        }
+        temp->link(converter);
+        converter = temp;
+        converters.pop_front();
+      }
+    }
+
+    std::shared_ptr<Command> command = std::make_shared<Command>(converter,
+      &UnitConverter::convert, std::stod(value));
+    commands.push_back(command);
   }
 
+  int size = commands.size();
+
+  for(int i = 0; i < size; ++i)
+  {
+    std::cout<<"Converted "<<commands.front()->getValue()
+      <<" to "<<commands.front()->execute()<<"!"
+      <<std::endl;
+    commands.pop_front();
+  }
+
+  /*
   if(argc >= 3)
   {
     std::stack<std::string> converters;
@@ -103,14 +181,7 @@ int main(int argc, char* argv[])
       return 1;
     }
   }
-  else
-  {
-    std::cout << "Invalid number of arguments!" << std::endl;
-    std::cout << "For help on how to use this program, use ./main -h." 
-    << std::endl;
-
-    return 1;
-  }
+  */
 
   /*
   auto myConverter = std::make_shared<dollarToEuroConverter>();
