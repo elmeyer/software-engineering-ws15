@@ -10,7 +10,7 @@ public:
     std::string unit2, double factor);
   Decorator(std::shared_ptr<UnitConverter> c);
   ~Decorator();
-  double convert(double inValue) const;
+  virtual double convert(double inValue) const;
   std::string toString() const;
   void link(std::shared_ptr<UnitConverter> c);
 private:

@@ -17,8 +17,7 @@ double UnitConverter::getFactor() const
   return factor;
 }
 
-void UnitConverter::getUnits(std::string & unitA, std::string & unitB) const
+std::pair<std::string, std::string> UnitConverter::getUnits() const
 {
-  unitA = unit1;
-  unitB = unit2;
+  return std::make_pair(unit1, unit2);
 }

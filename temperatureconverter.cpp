@@ -7,7 +7,6 @@ temperatureConverter::temperatureConverter(std::shared_ptr<UnitConverter> c,
 
 std::string temperatureConverter::toString() const
 {
-  std::string unit1, unit2;
-  UnitConverter::getUnits(unit1, unit2);
-  return Decorator::toString() + unit1 + " to " + unit2 + " converter";
+  std::pair<std::string, std::string> units = UnitConverter::getUnits();
+  return Decorator::toString() + units.first + " to " + units.second +" converter";
 }

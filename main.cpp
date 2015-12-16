@@ -2,7 +2,7 @@
 #include <iostream>
 #include <stack>
 #include "converterfactory.hpp"
-#include "decorator.hpp"
+#include "inversion.hpp"
 
 std::shared_ptr<ConverterFactory> ConverterFactory::s_instance = 0;
 
@@ -56,14 +56,32 @@ int main(int argc, char* argv[])
       converters.push(argv[i]);
     }
 
-    converter = factory->create(converters.top());
+    if(converters.top() == "invert")
+    {
+      converters.pop();
+      converter = std::make_shared<Inversion>(factory->create(converters.top()));
+    }
+    else
+    {
+      converter = factory->create(converters.top());
+    }
+
     converters.pop();
 
     if(converters.size() > 0)
     {
       for(int j = 0; j < converters.size(); ++j)
       {
-        std::shared_ptr<UnitConverter> temp = factory->create(converters.top());
+        std::shared_ptr<UnitConverter> temp;
+        if(converters.top() == "invert")
+        {
+          converters.pop();
+          temp = std::make_shared<Inversion>(factory->create(converters.top()));
+        }
+        else
+        {
+          temp = factory->create(converters.top());
+        }
         temp->link(converter);
         converter = temp;
         converters.pop();

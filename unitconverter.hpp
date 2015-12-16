@@ -13,7 +13,7 @@ class UnitConverter
     virtual std::string toString() const = 0;
     virtual void link(std::shared_ptr<UnitConverter> c) = 0;
     double getFactor() const;
-    void getUnits(std::string & unitA, std::string & unitB) const;
+    std::pair<std::string, std::string> getUnits() const;
   private:
     std::string unit1;
     std::string unit2;
