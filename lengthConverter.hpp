@@ -11,7 +11,6 @@ class lengthConverter : public UnitConverter
     lengthConverter();
     virtual double convert(double inValue) const = 0;
     virtual std::string toString() const = 0;
-    void print() const;
 };
 
 #endif // LENGTH_CONVERTER_H

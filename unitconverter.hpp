@@ -10,7 +10,6 @@ class UnitConverter
     UnitConverter();
     virtual double convert(const double inValue) const = 0;
     virtual std::string toString() const = 0;
-    virtual void print() const = 0;
 };
 
 #endif // CONVERTER_H
