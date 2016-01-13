@@ -1,5 +1,6 @@
 #include <memory>
 #include <vector>
+#include <iostream>
 #include "tinytest.h"
 #include "../converterfactory.hpp"
 
@@ -99,11 +100,11 @@ int converters()
                                 "dollarToPeso", "mileToKilometer",
                                 "meterToYard", "celsiusToFahrenheit",
                                 "celsiusToKelvin"};
-        std::vector<std::string> v2{"Dollar to Euro Converter",
-                                "Euro to Pound Converter",
-                                "Dollar to Peso Converter",
-                                "Mile to Kilometer Converter",
-                                "Meter to Yard Converter",
+        std::vector<std::string> v2{"Dollar to Euro converter",
+                                "Euro to Pound converter",
+                                "Dollar to Peso converter",
+                                "Mile to Kilometer converter",
+                                "Meter to Yard converter",
                                 "Celsius to Fahrenheit converter",
                                 "Celsius to Kelvin converter"};
         for(int i=0; i < v1.size(); ++i)
