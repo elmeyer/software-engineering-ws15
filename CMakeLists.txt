@@ -4,6 +4,9 @@ set(CMAKE_CXX_FLAGS "-std=c++0x -Wall")
 
 enable_testing()
 
-add_executable(main main.cpp celsiustofahrenheitconverter.cpp celsiustokelvinconverter.cpp command.cpp converterfactory.cpp currencyconverter.cpp decorator.cpp dollartoeuroconverter.cpp dollartopesoconverter.cpp eurotopoundconverter.cpp inversion.cpp lengthConverter.cpp meterToYardConverter.cpp mileToKilometerConverter.cpp temperatureconverter.cpp unitconverter.cpp)
+add_library(converters celsiustofahrenheitconverter.cpp celsiustokelvinconverter.cpp command.cpp converterfactory.cpp currencyconverter.cpp decorator.cpp dollartoeuroconverter.cpp dollartopesoconverter.cpp eurotopoundconverter.cpp inversion.cpp lengthConverter.cpp meterToYardConverter.cpp mileToKilometerConverter.cpp temperatureconverter.cpp unitconverter.cpp)
+
+add_executable(main main.cpp)
+target_link_libraries(main converters)
 
 add_subdirectory(tinytest)
