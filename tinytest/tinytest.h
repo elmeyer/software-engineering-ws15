@@ -181,8 +181,9 @@ void Suite##suiteName(TinyTestRegistry* registry)                       \
     if ( failedTests )                                                  \
     {                                                                   \
       printf(" FAILED: %d", failedTests);                               \
+      printf("\n");                                                     \
+      return 1;                                                         \
     }                                                                   \
-    printf("\n");                                                       \
   }
 
 #define TINYTEST_END_MAIN()                                             \
