@@ -10,7 +10,15 @@ celsiusToKelvinConverter::celsiusToKelvinConverter(std::shared_ptr<UnitConverter
 
 double celsiusToKelvinConverter::convert(double inValue) const
 {
-        return (Decorator::convert(inValue) + 273.15);
+        if (inValue < -273.15)
+        {
+          throw std::out_of_range("\033[5;31mERROR:\033[0m Input temperature cannot be below -273.15°C!");
+          return 0.0;
+        }
+        else
+        {
+          return (Decorator::convert(inValue) + 273.15);
+        }
 }
 /*
 std::string celsiusToKelvinConverter::toString() const

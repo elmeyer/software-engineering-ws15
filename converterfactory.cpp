@@ -9,6 +9,7 @@ std::shared_ptr<UnitConverter> ConverterFactory::create(std::string const& c)
         }
         else
         {
+                throw std::invalid_argument("\033[5;31mERROR:\033[0m Converter not found!");
                 return NULL;
         }
 } 

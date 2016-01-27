@@ -4,7 +4,12 @@ Command::Command(std::shared_ptr<UnitConverter> object, Action method, double va
   m_object(object),
   m_method(method),
   m_value(value)
-{}
+{
+  if (m_object == NULL)
+  {
+    throw std::invalid_argument("");
+  }
+}
 
 double Command::execute() const
 {

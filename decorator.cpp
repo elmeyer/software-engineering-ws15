@@ -34,5 +34,12 @@ std::string Decorator::toString() const
 
 void Decorator::link(std::shared_ptr<UnitConverter> c)
 {
-  m_wrappee = c;
+  if (c != NULL)
+  {
+    m_wrappee = c;
+  }
+  else
+  {
+    throw std::invalid_argument("");
+  }
 }

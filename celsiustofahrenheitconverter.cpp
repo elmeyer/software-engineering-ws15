@@ -10,7 +10,15 @@ celsiusToFahrenheitConverter::celsiusToFahrenheitConverter(std::shared_ptr<UnitC
 
 double celsiusToFahrenheitConverter::convert(double inValue) const
 {
-        return ((Decorator::convert(inValue) * 1.8) + 32);
+        if (inValue < -273.15)
+        {
+          throw std::out_of_range("\033[5;31mERROR:\033[0m Input temperature cannot be below -273.15°C!");
+          return 0.0;
+        }
+        else
+        {
+          return ((Decorator::convert(inValue) * 1.8) + 32);
+        }
 }
 /*
 std::string celsiusToFahrenheitConverter::toString() const

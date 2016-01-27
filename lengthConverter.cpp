@@ -7,6 +7,10 @@ lengthConverter::lengthConverter(std::shared_ptr<UnitConverter> c,
 
 double lengthConverter::convert(double inValue) const
 {
+  if (inValue < 0)
+  {
+    throw std::out_of_range("\033[5;31mERROR:\033[0m Length cannot be negative!");
+  }
   return Decorator::convert(inValue)*UnitConverter::getFactor();
 }
 

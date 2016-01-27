@@ -4,6 +4,7 @@
 #include <sstream>
 #include <deque>
 #include <vector>
+#include <exception>
 #include "converterfactory.hpp"
 #include "inversion.hpp"
 #include "command.hpp"
@@ -65,10 +66,17 @@ int main(int argc, char* argv[])
 
     std::istringstream stream{line};
     std::string word;
+    int c = 0;
     while(stream.good())
     {
       stream >> word;
       converters.push_back(word);
+      ++c;
+    }
+    if (c < 2)
+    {
+      std::cout << "\033[5;31mERROR:\033[0m Insufficient number of arguments!\n";
+      continue;
     }
 
     std::string value = converters.back();
@@ -77,11 +85,27 @@ int main(int argc, char* argv[])
     if(converters.front() == "invert")
     {
       converters.pop_front();
-      converter = std::make_shared<Inversion>(factory->create(converters.front()));
+      try
+      {
+        converter = std::make_shared<Inversion>(factory->create(converters.front()));
+      }
+      catch (std::exception const& e)
+      {
+        std::cout << e.what() << std::endl;
+        converter = NULL;
+      }
     }
     else
     {
-      converter = factory->create(converters.front());
+      try
+      {
+        converter = factory->create(converters.front());
+      }
+      catch (std::exception const& e)
+      {
+        std::cout << e.what() << std::endl;
+        converter = NULL;
+      }
     }
 
     converters.pop_front();
@@ -94,30 +118,63 @@ int main(int argc, char* argv[])
         if(converters.front() == "invert")
         {
           converters.pop_front();
-          temp = std::make_shared<Inversion>(factory->create(converters.front()));
+          try
+          {
+            temp = std::make_shared<Inversion>(factory->create(converters.front()));
+          }
+          catch (std::exception const& e)
+          {
+            std::cout << e.what() << std::endl;
+            continue;
+          }
         }
         else
         {
-          temp = factory->create(converters.front());
+          try
+          {
+            temp = factory->create(converters.front());
+          }
+          catch (std::exception const& e)
+          {
+            std::cout << e.what() << std::endl;
+            continue;
+          }
         }
-        temp->link(converter);
+        try
+        {
+          temp->link(converter);
+        }
+        catch (std::exception const& e)
+        {}
         converter = temp;
         converters.pop_front();
       }
     }
-
-    std::shared_ptr<Command> command = std::make_shared<Command>(converter,
-      &UnitConverter::convert, std::stod(value));
-    commands.push_back(command);
+    try
+    {
+      std::shared_ptr<Command> command = std::make_shared<Command>(converter,
+        &UnitConverter::convert, std::stod(value));
+      commands.push_back(command);
+    }
+    catch (std::exception const& e)
+    {}
   }
 
   int size = commands.size();
 
   for(int i = 0; i < size; ++i)
   {
-    std::cout<<"Converted "<<commands.front()->getValue()
-      <<" to "<<commands.front()->execute()<<"!"
-      <<std::endl;
+    try
+    {
+      double result = commands.front()->execute();
+      std::cout<<"Converted "<<commands.front()->getValue()
+        <<" to "<<result<<"!"
+        <<std::endl;
+    }
+    catch (std::exception const& e)
+    {
+      std::cout << e.what() << std::endl;
+    }
     commands.pop_front();
   }
 
